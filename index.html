@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>RecipeBox - Inspirasi Resep Setiap Hari</title>
+  <meta name="description" content="RecipeBox membantu kamu menemukan inspirasi masakan, menjelajahi resep, menyimpan favorit, dan mengatur daftar belanja.">
+  <meta name="theme-color" content="#ff7117">
+
+  <style>
+    :root {
+      --orange: #ff7117;
+      --orange-dark: #e85e08;
+      --cream: #fffaf5;
+      --text: #302820;
+      --muted: #746d66;
+      --white: #ffffff;
+      --border: #f0e5da;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1100px, 90%);
+      margin: auto;
+    }
+
+    /* NAVBAR */
+    nav {
+      background: rgba(255, 255, 255, 0.97);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav-content {
+      min-height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      color: var(--orange);
+    }
+
+    .logo span {
+      color: var(--text);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .nav-links a:hover {
+      color: var(--orange);
+    }
+
+    /* HERO */
+    .hero {
+      padding: 76px 0;
+      background: linear-gradient(135deg, #fff0e2, #fffaf5);
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      color: var(--orange-dark);
+      background: #ffe3cd;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(36px, 5vw, 56px);
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -1.5px;
+    }
+
+    h1 span {
+      color: var(--orange);
+    }
+
+    .hero p {
+      color: var(--muted);
+      margin-bottom: 26px;
+      max-width: 520px;
+    }
+
+    .button {
+      display: inline-block;
+      background: var(--orange);
+      color: white;
+      padding: 13px 22px;
+      border-radius: 10px;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .button:hover {
+      background: var(--orange-dark);
+      transform: translateY(-2px);
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 360px;
+      object-fit: cover;
+      border-radius: 26px;
+      box-shadow: 0 15px 40px #6e3c1920;
+    }
+
+    /* GENERAL SECTIONS */
+    section {
+      padding: 68px 0;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 38px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(26px, 4vw, 36px);
+      margin-bottom: 8px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      max-width: 620px;
+      margin: auto;
+    }
+
+    /* AI SECTION */
+    .ai-section {
+      background: white;
+    }
+
+    .ai-card {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 32px;
+      align-items: center;
+      padding: 36px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: linear-gradient(135deg, #fff7ef, #ffffff);
+    }
+
+    .ai-icon {
+      font-size: 100px;
+      text-align: center;
+    }
+
+    .ai-card h3 {
+      font-size: 25px;
+      margin-bottom: 12px;
+    }
+
+    .ai-card p {
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .example {
+      display: inline-block;
+      padding: 8px 13px;
+      border-radius: 9px;
+      background: #ffe6d3;
+      color: #8d3e0a;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    /* FEATURES */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .feature-card {
+      background: white;
+      padding: 28px 24px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      transition: 0.2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px #6e3c1910;
+    }
+
+    .feature-icon {
+      font-size: 34px;
+      margin-bottom: 12px;
+    }
+
+    .feature-card h3 {
+      font-size: 19px;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    /* ABOUT */
+    .about {
+      background: #fff0e2;
+      text-align: center;
+    }
+
+    .about p {
+      max-width: 750px;
+      margin: 12px auto 0;
+      color: var(--muted);
+    }
+
+    /* CONTACT */
+    .contact-card {
+      max-width: 700px;
+      margin: auto;
+      text-align: center;
+      background: white;
+      border: 1px solid var(--border);
+      padding: 34px;
+      border-radius: 20px;
+    }
+
+    .contact-card p {
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #302820;
+      color: white;
+      text-align: center;
+      padding: 28px 15px;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: #e1d8d0;
+    }
+
+    footer a {
+      color: #ffb47f;
+      text-decoration: underline;
+    }
+
+    /* MOBILE */
+    @media (max-width: 760px) {
+      .nav-content {
+        flex-direction: column;
+        padding: 14px 0;
+        gap: 10px;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 18px;
+      }
+
+      .hero {
+        padding: 45px 0;
+      }
+
+      .hero-content,
+      .ai-card {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-image {
+        height: 260px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ai-card {
+        padding: 25px;
+      }
+
+      section {
+        padding: 48px 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="container nav-content">
+      <a class="logo" href="#home">🍳 Recipe<span>Box</span></a>
+
+      <div class="nav-links">
+        <a href="#home">Beranda</a>
+        <a href="#ai">AI Assistant</a>
+        <a href="#fitur">Fitur</a>
+        <a href="#tentang">Tentang</a>
+        <a href="#kontak">Kontak</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-content">
+        <div>
+          <span class="eyebrow">🍊 Teman Memasakmu</span>
+
+          <h1>Bingung Mau Masak Apa <span>Hari Ini?</span></h1>
+
+          <p>
+            Temukan inspirasi masakan bersama RecipeBox.
+            Jelajahi berbagai resep, simpan makanan favorit,
+            dan dapatkan ide masakan dengan bantuan AI.
+          </p>
+
+          <a class="button" href="#ai">
+            Kenali AI RecipeBox →
+          </a>
+        </div>
+
+        <div>
+          <img
+            class="hero-image"
+            src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=85"
+            alt="Hidangan makanan segar sebagai inspirasi memasak"
+          >
+        </div>
+      </div>
+    </section>
+
+    <section class="ai-section" id="ai">
+      <div class="container">
+        <div class="section-heading">
+          <h2>🤖 Kenalan dengan AI RecipeBox</h2>
+          <p>
+            Tidak perlu bingung menentukan menu makanan.
+            Temukan inspirasi untuk memasak lebih menyenangkan.
+          </p>
+        </div>
+
+        <div class="ai-card">
+          <div class="ai-icon">👩‍🍳</div>
+
+          <div>
+            <h3>Inspirasi Masakan dengan Bantuan AI</h3>
+
+            <p>
+              Saat kamu kehabisan ide memasak, fitur AI RecipeBox
+              membantu memberikan inspirasi resep agar kamu lebih
+              mudah menentukan hidangan yang ingin dibuat.
+            </p>
+
+            <p>
+              Mau masak ayam, sayuran, atau menu lainnya?
+              Mulai temukan ide masakan yang cocok dengan kebutuhanmu.
+            </p>
+
+            <span class="example">
+              Contoh: bingung mau masak ayam apa hari ini?
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="fitur">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Fitur RecipeBox</h2>
+          <p>
+            Berbagai fitur untuk membantu pengalaman memasakmu
+            menjadi lebih praktis.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-icon">🍲</div>
+            <h3>Koleksi Resep</h3>
+            <p>
+              Jelajahi inspirasi resep makanan untuk menemukan
+              hidangan yang ingin kamu coba.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">🔎</div>
+            <h3>Pencarian Resep</h3>
+            <p>
+              Cari resep berdasarkan nama masakan atau kategori
+              yang tersedia di aplikasi.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">❤️</div>
+            <h3>Resep Favorit</h3>
+            <p>
+              Simpan resep pilihan agar lebih mudah ditemukan
+              kembali saat ingin memasak.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">🛒</div>
+            <h3>Daftar Belanja</h3>
+            <p>
+              Catat bahan makanan yang diperlukan untuk
+              membantu menyiapkan kebutuhan memasak.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">👤</div>
+            <h3>Profil Pengguna</h3>
+            <p>
+              Akses halaman profil untuk melihat dan mengelola
+              informasi pengguna yang tersedia.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">⚙️</div>
+            <h3>Pengaturan</h3>
+            <p>
+              Kelola preferensi dan pengaturan aplikasi
+              sesuai fitur yang tersedia.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="tentang">
+      <div class="container">
+        <h2>Tentang RecipeBox</h2>
+
+        <p>
+          RecipeBox adalah aplikasi mobile yang dirancang untuk
+          membantu pengguna menemukan inspirasi masakan,
+          menjelajahi resep, menyimpan favorit, dan menyiapkan
+          daftar belanja bahan makanan.
+        </p>
+
+        <p>
+          Dengan tampilan yang praktis dan inspirasi dari fitur AI,
+          RecipeBox ingin membuat kegiatan menentukan menu
+          sehari-hari menjadi lebih mudah dan menyenangkan.
+        </p>
+      </div>
+    </section>
+
+    <section id="kontak">
+      <div class="container">
+        <div class="contact-card">
+          <h2>Hubungi Pengembang</h2>
+
+          <p>
+            Ada pertanyaan, masukan, atau kendala saat menggunakan
+            RecipeBox? Silakan hubungi pengembang melalui alamat
+            email kontak yang tercantum di Google Play.
+          </p>
+
+          <p>
+            Kami menghargai masukan untuk membantu meningkatkan
+            pengalaman pengguna RecipeBox.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      &copy; 2026 RecipeBox. Hak cipta dilindungi.
+    </p>
+    <p>
+      Inspirasi memasak untuk setiap hari.
+    </p>
+  </footer>
+
+</body>
+</html>
